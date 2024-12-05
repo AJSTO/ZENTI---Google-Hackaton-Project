@@ -1,4 +1,4 @@
-import functions_framework
+ import functions_framework
 import time
 import logging
 from flask import jsonify
@@ -46,7 +46,7 @@ def run_query():
         MODEL `BQML.llm_model2`,
         (
           SELECT
-            CONCAT('Create a one word sentiment from product_review column. Possible values are positive/negative/neutral ', Product_Review) AS prompt,
+            CONCAT('Create a one word sentiment from a Review. Possible values are Positive/Negative/Neutral.: ', Product_Review) AS prompt,
             *
           FROM
             `primal-monument-358918.BQML.reviews`
@@ -72,7 +72,7 @@ def run_query():
         MODEL `BQML.llm_model2`,
         (
           SELECT
-            CONCAT('Create a one word reason from product_review column. Possible values are Quality/Price/Shipping.', Product_Review) AS prompt,
+            CONCAT('Create a one word reason of the review. Possible values are Good Quality/Bad Quality/ High Price/ Low Price/ Shipping Issues.', Product_Review) AS prompt,
             *
           FROM
             `primal-monument-358918.BQML.reviews`
@@ -80,7 +80,7 @@ def run_query():
         ),
         STRUCT(
           1 AS temperature,
-          1 AS max_output_tokens,
+          5 AS max_output_tokens,
           0.2 AS top_p, 
           1 AS top_k))
     )
@@ -150,3 +150,4 @@ def hello_http(request):
         }
 
     return jsonify(response_data), 200
+
